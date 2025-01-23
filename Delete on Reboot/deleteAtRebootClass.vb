@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.Win32
 
 ''' <summary>This class manages the pending operations at system reboot.</summary>
@@ -28,6 +29,7 @@ Public Class deleteAtReboot
     ''' <param name="boolExactMatch">This is an optional parameter. If True then the function will do an exact match check, if False the function will simply remove an item from the operations queue if the file to be worked on contains the value of the strFileToBeRemoved input parameter.</param>
     Public Sub removeItem(strFileToBeRemoved As String, Optional boolExactMatch As Boolean = False)
         If String.IsNullOrWhiteSpace(strFileToBeRemoved) Then Throw New ArgumentNullException(NameOf(strFileToBeRemoved))
+
         If Not currentPendingOperations.Count.Equals(0) Then
             For Each item As deleteAtRebootStructure In currentPendingOperations
                 If boolExactMatch Then
@@ -66,6 +68,10 @@ Public Class deleteAtReboot
         boolThingsChanged = True
     End Sub
 
+    Private Function RemoveNumber(strInput As String) As String
+        Return Regex.Replace(strInput, "\*[0-9]{1,2}\!{0,1}", "")
+    End Function
+
     ''' <summary>This function loads the list of pending operations at system reboot.</summary>
     ''' <returns>A list of pending operations.</returns>
     Private Function loadStagedPendingOperations() As List(Of deleteAtRebootStructure)
@@ -81,8 +87,8 @@ Public Class deleteAtReboot
 
             If pendingOperations IsNot Nothing Then
                 For i = 0 To pendingOperations.Count - 1 Step 2
-                    strFileToBeWorkedOn = pendingOperations(i).Replace("\??\", "")
-                    strFileToBeRenamedTo = pendingOperations(i + 1).Replace("\??\", "")
+                    strFileToBeWorkedOn = RemoveNumber(pendingOperations(i).Replace("\??\", ""))
+                    strFileToBeRenamedTo = RemoveNumber(pendingOperations(i + 1).Replace("\??\", ""))
 
                     If String.IsNullOrEmpty(pendingOperations(i + 1).Trim) Then
                         _pendingOperations.Add(New deleteAtRebootStructure(strFileToBeWorkedOn))

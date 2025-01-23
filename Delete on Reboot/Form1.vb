@@ -58,14 +58,14 @@ Public Class Form1
         loadStagedOperations()
         colFileName.Width = My.Settings.fileNameColumnSize
         colRenamedTo.Width = My.Settings.renamedToColumnSize
-        Me.Size = My.Settings.windowSize
+        Size = My.Settings.windowSize
 
         boolDoneLoading = True
     End Sub
 
     Private Sub btnRemoveItem_Click(sender As Object, e As EventArgs) Handles btnRemoveItem.Click
         For Each item As operationsListEntry In listOperations.SelectedItems
-            deleteAtReboot.removeItem(item.strFileToBeWorkedOn)
+            deleteAtReboot.removeItem(item.strFileToBeWorkedOn, True)
         Next
 
         loadStagedOperations()
@@ -81,7 +81,8 @@ Public Class Form1
                 entryToBeAdded = New operationsListEntry With {
                     .strFileToBeWorkedOn = item.strFileToBeWorkedOn,
                     .strToBeRenamedTo = item.strToBeRenamedTo,
-                    .boolDelete = item.boolDelete
+                    .boolDelete = item.boolDelete,
+                    .boolExists = IO.File.Exists(item.strFileToBeWorkedOn)
                 }
                 entryToBeAdded.createItem()
 
@@ -95,12 +96,12 @@ Public Class Form1
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         deleteAtReboot.dispose(True)
-        MsgBox("Pending operations saved.", MsgBoxStyle.Information, Me.Text)
+        MsgBox("Pending operations saved.", MsgBoxStyle.Information, Text)
     End Sub
 
     Private Sub btnStageRename_Click(sender As Object, e As EventArgs) Handles btnStageRename.Click
         If String.IsNullOrEmpty(txtFile.Text) Then
-            MsgBox("You must provide a file to work with.", MsgBoxStyle.Critical, Me.Text)
+            MsgBox("You must provide a file to work with.", MsgBoxStyle.Critical, Text)
         Else
             SaveFileDialog1.Title = "Enter new file name..."
             SaveFileDialog1.FileName = txtFile.Text
@@ -117,7 +118,7 @@ Public Class Form1
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         If String.IsNullOrEmpty(txtFile.Text) Then
-            MsgBox("You must provide a file to work with.", MsgBoxStyle.Critical, Me.Text)
+            MsgBox("You must provide a file to work with.", MsgBoxStyle.Critical, Text)
         Else
             deleteAtReboot.addItem(txtFile.Text)
             deleteAtReboot.save()
@@ -144,7 +145,7 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
-        If boolDoneLoading Then My.Settings.windowSize = Me.Size
+        If boolDoneLoading Then My.Settings.windowSize = Size
     End Sub
 End Class
 
@@ -154,14 +155,18 @@ Public Class operationsListEntry
     Public Property boolDelete As Boolean
     Public Property strFileToBeWorkedOn As String
     Public Property strToBeRenamedTo As String
+    Public Property boolExists As Boolean
 
     Public Sub createItem()
         If boolDelete Then
-            Me.Text = strFileToBeWorkedOn
-            Me.SubItems.Add("(To Be Deleted)")
+            Text = strFileToBeWorkedOn
+            SubItems.Add("(To Be Deleted)")
         Else
-            Me.Text = strFileToBeWorkedOn
-            Me.SubItems.Add(strToBeRenamedTo)
+            Text = strFileToBeWorkedOn
+            SubItems.Add(strToBeRenamedTo)
         End If
+
+        SubItems.Add(If(boolExists, "Yes", "No"))
+        If Not boolExists Then BackColor = Color.Pink
     End Sub
 End Class

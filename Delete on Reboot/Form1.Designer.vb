@@ -36,6 +36,7 @@ Partial Class Form1
         Me.listOperations = New System.Windows.Forms.ListView()
         Me.colFileName = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.colRenamedTo = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.colExist = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.SuspendLayout()
         '
         'Label1
@@ -49,7 +50,8 @@ Partial Class Form1
         '
         'txtFile
         '
-        Me.txtFile.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtFile.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtFile.Location = New System.Drawing.Point(100, 6)
         Me.txtFile.Name = "txtFile"
         Me.txtFile.Size = New System.Drawing.Size(643, 20)
@@ -144,9 +146,12 @@ Partial Class Form1
         '
         'listOperations
         '
-        Me.listOperations.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) Or System.Windows.Forms.AnchorStyles.Left) Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.listOperations.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.colFileName, Me.colRenamedTo})
+        Me.listOperations.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.listOperations.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.colFileName, Me.colRenamedTo, Me.colExist})
         Me.listOperations.FullRowSelect = True
+        Me.listOperations.HideSelection = False
         Me.listOperations.Location = New System.Drawing.Point(12, 90)
         Me.listOperations.Name = "listOperations"
         Me.listOperations.Size = New System.Drawing.Size(768, 225)
@@ -163,6 +168,10 @@ Partial Class Form1
         '
         Me.colRenamedTo.Text = "Renamed To"
         Me.colRenamedTo.Width = 221
+        '
+        'colExist
+        '
+        Me.colExist.Text = "Exists?"
         '
         'Form1
         '
@@ -200,4 +209,5 @@ Partial Class Form1
     Friend WithEvents listOperations As ListView
     Friend WithEvents colFileName As ColumnHeader
     Friend WithEvents colRenamedTo As ColumnHeader
+    Friend WithEvents colExist As ColumnHeader
 End Class

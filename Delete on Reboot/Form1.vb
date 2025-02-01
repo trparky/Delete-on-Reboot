@@ -35,9 +35,8 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim registryKey As RegistryKey = Registry.ClassesRoot.OpenSubKey("*\shell\Delete on Reboot\command", True)
-
-        If (registryKey Is Nothing) = False Then
+        Using registryKey As RegistryKey = Registry.ClassesRoot.OpenSubKey("*\shell\Delete on Reboot\command", True)
+            If registryKey IsNot Nothing Then
             Dim matches As Match = Regex.Match(registryKey.GetValue(vbNullString), "(""{0,1}[A-Za-z]:\\.*\.(?:bat|bin|cmd|com|cpl|exe|gadget|inf1|ins|inx|isu|job|jse|lnk|msc|msi|msp|mst|paf|pif|ps1|reg|rgs|sct|shb|shs|u3p|vb|vbe|vbs|vbscript|ws|wsf)""{0,1} )(.*)", RegexOptions.IgnoreCase)
 
             If matches.Groups(1).Value.Trim.Replace("""", "") <> Application.ExecutablePath Then
@@ -45,9 +44,8 @@ Public Class Form1
             End If
 
             chkAddToContextMenu.Checked = True
-            registryKey.Close()
-            registryKey.Dispose()
         End If
+        End Using
 
         loadStagedOperations()
         colFileName.Width = My.Settings.fileNameColumnSize

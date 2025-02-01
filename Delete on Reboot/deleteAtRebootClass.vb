@@ -108,7 +108,7 @@ Public Class deleteAtReboot
     Private Sub saveStagedPendingOperations()
         Using registryKey As RegistryKey = Registry.LocalMachine.OpenSubKey("SYSTEM\CurrentControlSet\Control\Session Manager", True)
             If currentPendingOperations.Count = 0 Then
-                registryKey.DeleteValue("PendingFileRenameOperations")
+                registryKey.DeleteValue("PendingFileRenameOperations", False)
             Else
                 Dim itemsToBeSavedToTheRegistry As New Specialized.StringCollection()
 

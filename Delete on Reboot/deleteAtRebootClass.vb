@@ -1,5 +1,4 @@
-﻿Imports System.Runtime.CompilerServices
-Imports System.Text.RegularExpressions
+﻿Imports System.Text.RegularExpressions
 Imports Microsoft.Win32
 
 ''' <summary>This class manages the pending operations at system reboot.</summary>
@@ -119,17 +118,6 @@ Public Class deleteAtReboot
         End Using
     End Sub
 End Class
-
-Module StringExtensions
-    ''' <summary>This function uses an IndexOf call to do a case-insensitive search. This function operates a lot like Contains().</summary>
-    ''' <param name="needle">The String containing what you want to search for.</param>
-    ''' <return>Returns a Boolean value.</return>
-    <Extension()>
-    Public Function caseInsensitiveContains(haystack As String, needle As String) As Boolean
-        Dim index As Integer = haystack.IndexOf(needle, StringComparison.OrdinalIgnoreCase)
-        Return If(index = -1, False, True)
-    End Function
-End Module
 
 Public Structure deleteAtRebootStructure
     Public Property boolDelete As Boolean

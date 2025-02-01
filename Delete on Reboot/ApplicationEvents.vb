@@ -9,8 +9,8 @@
     ' NetworkAvailabilityChanged: Raised when the network connection is connected or disconnected.
     Partial Friend Class MyApplication
         Private Sub MyApplication_Startup(sender As Object, e As ApplicationServices.StartupEventArgs) Handles Me.Startup
-            If My.Application.CommandLineArgs.Count = 1 Then
-                Dim commandLineArgument As String = My.Application.CommandLineArgs(0)
+            If Application.CommandLineArgs.Count = 1 Then
+                Dim commandLineArgument As String = Application.CommandLineArgs(0)
 
                 If IO.File.Exists(commandLineArgument) Then
                     Dim deleteAtRebootInstance As New deleteAtReboot()

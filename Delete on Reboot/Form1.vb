@@ -15,28 +15,22 @@ Public Class Form1
     End Sub
 
     Private Sub chkAddToContextMenu_Click(sender As Object, e As EventArgs) Handles chkAddToContextMenu.Click
-        Dim registryKey As RegistryKey
-
         If chkAddToContextMenu.Checked Then
-            registryKey = Registry.ClassesRoot.OpenSubKey("*\shell", True)
-            registryKey.CreateSubKey("Delete on Reboot")
-            registryKey.Close()
-            registryKey.Dispose()
+            Using registryKey As RegistryKey = Registry.ClassesRoot.OpenSubKey("*\shell", True)
+                registryKey.CreateSubKey("Delete on Reboot")
+            End Using
 
-            registryKey = Registry.ClassesRoot.OpenSubKey("*\shell\Delete on Reboot", True)
-            registryKey.CreateSubKey("command")
-            registryKey.Close()
-            registryKey.Dispose()
+            Using registryKey As RegistryKey = Registry.ClassesRoot.OpenSubKey("*\shell\Delete on Reboot", True)
+                registryKey.CreateSubKey("command")
+            End Using
 
-            registryKey = Registry.ClassesRoot.OpenSubKey("*\shell\Delete on Reboot\command", True)
-            registryKey.SetValue(vbNullString, """" & Application.ExecutablePath & """ ""%1""", RegistryValueKind.String)
-            registryKey.Close()
-            registryKey.Dispose()
+            Using registryKey As RegistryKey = Registry.ClassesRoot.OpenSubKey("*\shell\Delete on Reboot\command", True)
+                registryKey.SetValue(vbNullString, """" & Application.ExecutablePath & """ ""%1""", RegistryValueKind.String)
+            End Using
         Else
-            registryKey = Registry.ClassesRoot.OpenSubKey("*\shell", True)
-            registryKey.DeleteSubKeyTree("Delete on Reboot")
-            registryKey.Close()
-            registryKey.Dispose()
+            Using registryKey As RegistryKey = Registry.ClassesRoot.OpenSubKey("*\shell", True)
+                registryKey.DeleteSubKeyTree("Delete on Reboot")
+            End Using
         End If
     End Sub
 

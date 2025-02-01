@@ -57,7 +57,7 @@ Public Class Form1
 
     Private Sub btnRemoveItem_Click(sender As Object, e As EventArgs) Handles btnRemoveItem.Click
         For Each item As operationsListEntry In listOperations.SelectedItems
-            deleteAtReboot.removeItem(item.strFileToBeWorkedOn, True)
+            deleteAtReboot.removeItem(item.GUID)
         Next
 
         loadStagedOperations()
@@ -71,6 +71,7 @@ Public Class Form1
         If deleteAtReboot.currentPendingOperations.Count <> 0 Then
             For Each item As deleteAtRebootStructure In deleteAtReboot.currentPendingOperations
                 entryToBeAdded = New operationsListEntry With {
+                    .GUID = item.GUID,
                     .strFileToBeWorkedOn = item.strFileToBeWorkedOn,
                     .strToBeRenamedTo = item.strToBeRenamedTo,
                     .boolDelete = item.boolDelete,
@@ -152,6 +153,7 @@ Public Class operationsListEntry
     Public Property strFileToBeWorkedOn As String
     Public Property strToBeRenamedTo As String
     Public Property boolExists As Boolean
+    Public Property GUID As Guid
 
     Public Sub createItem()
         If boolDelete Then

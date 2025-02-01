@@ -25,25 +25,14 @@ Public Class deleteAtReboot
     End Sub
 
     ''' <summary>This function removes an item from the list of pending file operations that are to occur at the next system reboot.</summary>
-    ''' <param name="strFileToBeRemoved">The name of the file that's in the operations queue that needs to be removed.</param>
-    ''' <param name="boolExactMatch">This is an optional parameter. If True then the function will do an exact match check, if False the function will simply remove an item from the operations queue if the file to be worked on contains the value of the strFileToBeRemoved input parameter.</param>
-    Public Sub removeItem(strFileToBeRemoved As String, Optional boolExactMatch As Boolean = False)
-        If String.IsNullOrWhiteSpace(strFileToBeRemoved) Then Throw New ArgumentNullException(NameOf(strFileToBeRemoved))
-
+    ''' <param name="GUID">The GUID for the entry.</param>
+    Public Sub removeItem(GUID As Guid)
         If Not currentPendingOperations.Count.Equals(0) Then
             For Each item As deleteAtRebootStructure In currentPendingOperations
-                If boolExactMatch Then
-                    If item.strFileToBeWorkedOn.Equals(strFileToBeRemoved, StringComparison.OrdinalIgnoreCase) Then
-                        currentPendingOperations.Remove(item)
-                        boolThingsChanged = True
-                        Exit For ' Now that we removed the item we have to escape out of the loop.
-                    End If
-                Else
-                    If item.strFileToBeWorkedOn.caseInsensitiveContains(strFileToBeRemoved) Then
-                        currentPendingOperations.Remove(item)
-                        boolThingsChanged = True
-                        Exit For ' Now that we removed the item we have to escape out of the loop.
-                    End If
+                If item.GUID.Equals(GUID) Then
+                    currentPendingOperations.Remove(item)
+                    boolThingsChanged = True
+                    Exit For ' Now that we removed the item we have to escape out of the loop.
                 End If
             Next
         End If
@@ -146,6 +135,7 @@ Public Structure deleteAtRebootStructure
     Public Property boolDelete As Boolean
     Public Property strFileToBeWorkedOn As String
     Public Property strToBeRenamedTo As String
+    Public Property GUID As Guid
 
     ''' <summary>This adds an item to be renamed.</summary>
     ''' <param name="strFileToBeWorkedOn">The file to be renamed.</param>
@@ -153,6 +143,7 @@ Public Structure deleteAtRebootStructure
     Public Sub New(strFileToBeWorkedOn As String, strToBeRenamedTo As String)
         Me.strFileToBeWorkedOn = strFileToBeWorkedOn
         Me.strToBeRenamedTo = strToBeRenamedTo
+        GUID = Guid.NewGuid()
         boolDelete = False
     End Sub
 
@@ -160,6 +151,7 @@ Public Structure deleteAtRebootStructure
     ''' <param name="strFileToDelete">The file to be deleted from the pending operations.</param>
     Public Sub New(strFileToDelete As String)
         strFileToBeWorkedOn = strFileToDelete
+        GUID = Guid.NewGuid()
         strToBeRenamedTo = Nothing
         boolDelete = True
     End Sub

@@ -141,6 +141,10 @@ Public Class Form1
     Private Sub Form1_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
         If boolDoneLoading Then My.Settings.windowSize = Size
     End Sub
+
+    Private Sub listOperations_KeyUp(sender As Object, e As KeyEventArgs) Handles listOperations.KeyUp
+        If e.KeyCode = Keys.Delete Then btnRemoveItem.PerformClick()
+    End Sub
 End Class
 
 ' This class extends the ListViewItem so that I can add more properties to it for my purposes.

@@ -124,6 +124,7 @@ End Class
 
 Public Structure deleteAtRebootStructure
     Public Property boolDelete As Boolean
+    Public Property boolExists As Boolean
     Public Property strFileToBeWorkedOn As String
     Public Property strToBeRenamedTo As String
     Public Property GUID As Guid
@@ -132,6 +133,7 @@ Public Structure deleteAtRebootStructure
     ''' <param name="strFileToBeWorkedOn">The file to be renamed.</param>
     ''' <param name="strToBeRenamedTo">The new name of the file to be renamed.</param>
     Public Sub New(strFileToBeWorkedOn As String, strToBeRenamedTo As String)
+        boolExists = IO.File.Exists(strFileToBeWorkedOn) Or IO.Directory.Exists(strFileToBeWorkedOn)
         Me.strFileToBeWorkedOn = strFileToBeWorkedOn
         Me.strToBeRenamedTo = strToBeRenamedTo
         GUID = Guid.NewGuid()
@@ -141,6 +143,7 @@ Public Structure deleteAtRebootStructure
     ''' <summary>This adds an item to be deleted.</summary>
     ''' <param name="strFileToDelete">The file to be deleted from the pending operations.</param>
     Public Sub New(strFileToDelete As String)
+        boolExists = IO.File.Exists(strFileToDelete) Or IO.Directory.Exists(strFileToDelete)
         strFileToBeWorkedOn = strFileToDelete
         GUID = Guid.NewGuid()
         strToBeRenamedTo = Nothing

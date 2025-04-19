@@ -75,7 +75,7 @@ Public Class Form1
                     .strFileToBeWorkedOn = item.strFileToBeWorkedOn,
                     .strToBeRenamedTo = item.strToBeRenamedTo,
                     .boolDelete = item.boolDelete,
-                    .boolExists = IO.File.Exists(item.strFileToBeWorkedOn) Or IO.Directory.Exists(item.strFileToBeWorkedOn)
+                    .boolExists = item.boolExists
                 }
                 entryToBeAdded.createItem()
 

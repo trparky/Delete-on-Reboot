@@ -24,16 +24,19 @@ Public Class deleteAtReboot
     End Sub
 
     ''' <summary>This function removes an item from the list of pending file operations that are to occur at the next system reboot.</summary>
-    ''' <param name="GUID">The GUID for the entry.</param>
-    Public Sub removeItem(GUID As Guid)
-        If Not currentPendingOperations.Count.Equals(0) Then
+    ''' <param name="itemsGUIDToRemove">The GUID for the entry.</param>
+    Public Sub removeItem(itemsGUIDToRemove As Guid)
+        If currentPendingOperations.Any() Then
+            Dim newCurrentPendingOperations As New List(Of deleteAtRebootStructure)
+
             For Each item As deleteAtRebootStructure In currentPendingOperations
-                If item.GUID.Equals(GUID) Then
-                    currentPendingOperations.Remove(item)
+                If Not item.GUID.Equals(itemsGUIDToRemove) Then
+                    newCurrentPendingOperations.Add(item)
                     boolThingsChanged = True
-                    Exit For ' Now that we removed the item we have to escape out of the loop.
                 End If
             Next
+
+            currentPendingOperations = newCurrentPendingOperations
         End If
     End Sub
 

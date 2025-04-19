@@ -56,12 +56,14 @@ Public Class Form1
     End Sub
 
     Private Sub btnRemoveItem_Click(sender As Object, e As EventArgs) Handles btnRemoveItem.Click
-        For Each item As operationsListEntry In listOperations.SelectedItems
-            deleteAtReboot.removeItem(item.GUID)
-        Next
+        If listOperations.SelectedItems.Count > 0 Then
+            For Each item As operationsListEntry In listOperations.SelectedItems
+                deleteAtReboot.removeItem(item.GUID)
+            Next
 
-        loadStagedOperations()
-        btnSave.Enabled = True
+            loadStagedOperations()
+            btnSave.Enabled = True
+        End If
     End Sub
 
     Sub loadStagedOperations()

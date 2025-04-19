@@ -134,6 +134,7 @@ Public Class Form1
         If boolDoneLoading Then
             My.Settings.fileNameColumnSize = colFileName.Width
             My.Settings.renamedToColumnSize = colRenamedTo.Width
+            If colExist.Width < 60 Then colExist.Width = 60
         End If
     End Sub
 

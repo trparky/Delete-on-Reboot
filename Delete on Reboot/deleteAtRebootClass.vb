@@ -129,6 +129,31 @@ Public Structure deleteAtRebootStructure
     Public Property strToBeRenamedTo As String
     Public Property GUID As Guid
 
+    Public Function CreateListViewEntry() As operationsListEntry
+        Dim operationsListEntry As New operationsListEntry With {
+            .GUID = GUID,
+            .strFileToBeWorkedOn = strFileToBeWorkedOn,
+            .strToBeRenamedTo = strToBeRenamedTo,
+            .boolDelete = boolDelete,
+            .boolExists = boolExists
+        }
+
+        With operationsListEntry
+            If boolDelete Then
+                .Text = strFileToBeWorkedOn
+                .SubItems.Add("(To Be Deleted)")
+            Else
+                .Text = strFileToBeWorkedOn
+                .SubItems.Add(strToBeRenamedTo)
+            End If
+
+            .SubItems.Add(If(boolExists, "Yes", "No"))
+            If Not boolExists Then .BackColor = Color.Pink
+        End With
+
+        Return operationsListEntry
+    End Function
+
     ''' <summary>This adds an item to be renamed.</summary>
     ''' <param name="strFileToBeWorkedOn">The file to be renamed.</param>
     ''' <param name="strToBeRenamedTo">The new name of the file to be renamed.</param>

@@ -68,20 +68,10 @@ Public Class Form1
 
     Sub loadStagedOperations()
         Dim toBePutIntoTheListOnTheGUI As New List(Of operationsListEntry)
-        Dim entryToBeAdded As operationsListEntry
 
         If deleteAtReboot.currentPendingOperations.Count <> 0 Then
             For Each item As deleteAtRebootStructure In deleteAtReboot.currentPendingOperations
-                entryToBeAdded = New operationsListEntry With {
-                    .GUID = item.GUID,
-                    .strFileToBeWorkedOn = item.strFileToBeWorkedOn,
-                    .strToBeRenamedTo = item.strToBeRenamedTo,
-                    .boolDelete = item.boolDelete,
-                    .boolExists = item.boolExists
-                }
-                entryToBeAdded.createItem()
-
-                toBePutIntoTheListOnTheGUI.Add(entryToBeAdded)
+                toBePutIntoTheListOnTheGUI.Add(item.CreateListViewEntry())
             Next
         End If
 
@@ -157,17 +147,4 @@ Public Class operationsListEntry
     Public Property strToBeRenamedTo As String
     Public Property boolExists As Boolean
     Public Property GUID As Guid
-
-    Public Sub createItem()
-        If boolDelete Then
-            Text = strFileToBeWorkedOn
-            SubItems.Add("(To Be Deleted)")
-        Else
-            Text = strFileToBeWorkedOn
-            SubItems.Add(strToBeRenamedTo)
-        End If
-
-        SubItems.Add(If(boolExists, "Yes", "No"))
-        If Not boolExists Then BackColor = Color.Pink
-    End Sub
 End Class

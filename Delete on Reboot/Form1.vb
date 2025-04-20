@@ -50,6 +50,7 @@ Public Class Form1
         loadStagedOperations()
         colFileName.Width = My.Settings.fileNameColumnSize
         colRenamedTo.Width = My.Settings.renamedToColumnSize
+        If colRenamedTo.Width < 100 Then colRenamedTo.Width = 100
         Size = My.Settings.windowSize
 
         boolDoneLoading = True
@@ -127,6 +128,7 @@ Public Class Form1
             My.Settings.fileNameColumnSize = colFileName.Width
             My.Settings.renamedToColumnSize = colRenamedTo.Width
             If colExist.Width < 60 Then colExist.Width = 60
+            If colRenamedTo.Width < 100 Then colRenamedTo.Width = 100
         End If
     End Sub
 

@@ -22,7 +22,7 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblLocationOfFile = New System.Windows.Forms.Label()
         Me.txtFile = New System.Windows.Forms.TextBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.chkAddToContextMenu = New System.Windows.Forms.CheckBox()
@@ -39,14 +39,14 @@ Partial Class Form1
         Me.colExist = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.SuspendLayout()
         '
-        'Label1
+        'lblLocationOfFile
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 9)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(82, 13)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Location of File:"
+        Me.lblLocationOfFile.AutoSize = True
+        Me.lblLocationOfFile.Location = New System.Drawing.Point(12, 9)
+        Me.lblLocationOfFile.Name = "lblLocationOfFile"
+        Me.lblLocationOfFile.Size = New System.Drawing.Size(82, 13)
+        Me.lblLocationOfFile.TabIndex = 0
+        Me.lblLocationOfFile.Text = "Location of File:"
         '
         'txtFile
         '
@@ -187,7 +187,7 @@ Partial Class Form1
         Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.btnBrowse)
         Me.Controls.Add(Me.txtFile)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.lblLocationOfFile)
         Me.MinimumSize = New System.Drawing.Size(808, 389)
         Me.Name = "Form1"
         Me.Text = "Delete on Reboot"
@@ -195,7 +195,7 @@ Partial Class Form1
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lblLocationOfFile As System.Windows.Forms.Label
     Friend WithEvents txtFile As System.Windows.Forms.TextBox
     Friend WithEvents btnBrowse As System.Windows.Forms.Button
     Friend WithEvents btnDelete As System.Windows.Forms.Button

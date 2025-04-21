@@ -96,6 +96,9 @@ Public Class Form1
         ' Clear and update the ListView
         listOperations.Items.Clear()
         listOperations.Items.AddRange(toBePutIntoTheListOnTheGUI.ToArray())
+
+        ' Update the label with the number of pending operations
+        Label2.Text = $"Current Staged Operations ({listOperations.Items.Count} {If(listOperations.Items.Count = 1, "item", "items")})"
     End Sub
 
     ' Event handler for Save button click

@@ -26,7 +26,7 @@ Partial Class Form1
         Me.txtFile = New System.Windows.Forms.TextBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.chkAddToContextMenu = New System.Windows.Forms.CheckBox()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lblPendingOperationsLabel = New System.Windows.Forms.Label()
         Me.btnStageRename = New System.Windows.Forms.Button()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.btnSave = New System.Windows.Forms.Button()
@@ -72,14 +72,14 @@ Partial Class Form1
         Me.chkAddToContextMenu.Text = "Add ""Delete on Reboot"" to File Context Menu"
         Me.chkAddToContextMenu.UseVisualStyleBackColor = True
         '
-        'Label2
+        'lblPendingOperationsLabel
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(9, 74)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(132, 13)
-        Me.Label2.TabIndex = 5
-        Me.Label2.Text = "Current Staged Operations"
+        Me.lblPendingOperationsLabel.AutoSize = True
+        Me.lblPendingOperationsLabel.Location = New System.Drawing.Point(9, 74)
+        Me.lblPendingOperationsLabel.Name = "lblPendingOperationsLabel"
+        Me.lblPendingOperationsLabel.Size = New System.Drawing.Size(132, 13)
+        Me.lblPendingOperationsLabel.TabIndex = 5
+        Me.lblPendingOperationsLabel.Text = "Current Staged Operations"
         '
         'btnStageRename
         '
@@ -182,7 +182,7 @@ Partial Class Form1
         Me.Controls.Add(Me.btnStageRename)
         Me.Controls.Add(Me.btnSave)
         Me.Controls.Add(Me.btnRemoveItem)
-        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.lblPendingOperationsLabel)
         Me.Controls.Add(Me.chkAddToContextMenu)
         Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.btnBrowse)
@@ -201,7 +201,7 @@ Partial Class Form1
     Friend WithEvents btnDelete As System.Windows.Forms.Button
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
     Friend WithEvents chkAddToContextMenu As System.Windows.Forms.CheckBox
-    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents lblPendingOperationsLabel As System.Windows.Forms.Label
     Friend WithEvents btnRemoveItem As System.Windows.Forms.Button
     Friend WithEvents btnSave As System.Windows.Forms.Button
     Friend WithEvents btnStageRename As System.Windows.Forms.Button

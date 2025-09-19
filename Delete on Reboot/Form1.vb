@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.Win32
 Imports System.Text.RegularExpressions
+Imports System.Runtime.InteropServices
 
 Public Class Form1
     ' Instance of deleteAtReboot class to manage file operations
@@ -183,6 +184,37 @@ Public Class Form1
             btnRemoveItem.PerformClick()
         End If
     End Sub
+
+    Public Sub SelectFileInWindowsExplorer(strFullPath As String)
+        If Not String.IsNullOrEmpty(strFullPath) Then
+            If IO.File.Exists(strFullPath) Then
+                ' It's a file, select it
+                Dim pidlList As IntPtr = NativeMethods.ILCreateFromPathW(strFullPath)
+
+                If Not pidlList.Equals(IntPtr.Zero) Then
+                    Try
+                        NativeMethods.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0)
+                    Finally
+                        NativeMethods.ILFree(pidlList)
+                    End Try
+                End If
+            ElseIf IO.Directory.Exists(strFullPath) Then
+                ' It's a directory, open the folder
+                Dim pidlList As IntPtr = NativeMethods.ILCreateFromPathW(strFullPath)
+
+                If Not pidlList.Equals(IntPtr.Zero) Then
+                    Try
+                        NativeMethods.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0)
+                    Finally
+                        NativeMethods.ILFree(pidlList)
+                    End Try
+                End If
+            Else
+                ' Path does not exist
+                MsgBox($"The file or directory ""{strFullPath}"" does not exist.", MsgBoxStyle.Exclamation, "Error")
+            End If
+        End If
+    End Sub
 End Class
 
 ' This class extends the ListViewItem so that additional properties can be added
@@ -198,4 +230,18 @@ Public Class operationsListEntry
     Public Property boolExists As Boolean
     ' Unique identifier for the operation
     Public Property GUID As Guid
+End Class
+
+Friend Class NativeMethods
+    <DllImport("shell32.dll", ExactSpelling:=True)>
+    Public Shared Function SHOpenFolderAndSelectItems(pidlList As IntPtr, cild As UInteger, children As IntPtr, dwFlags As UInteger) As Integer
+    End Function
+
+    <DllImport("shell32.dll", ExactSpelling:=True)>
+    Public Shared Sub ILFree(pidlList As IntPtr)
+    End Sub
+
+    <DllImport("shell32.dll", CharSet:=CharSet.Unicode, ExactSpelling:=True)>
+    Public Shared Function ILCreateFromPathW(pszPath As String) As IntPtr
+    End Function
 End Class

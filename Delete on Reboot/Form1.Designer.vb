@@ -22,6 +22,7 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.lblLocationOfFile = New System.Windows.Forms.Label()
         Me.txtFile = New System.Windows.Forms.TextBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
@@ -37,6 +38,9 @@ Partial Class Form1
         Me.colFileName = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.colRenamedTo = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.colExist = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.FileListMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.OpenExplorerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FileListMenu.SuspendLayout()
         Me.SuspendLayout()
         '
         'lblLocationOfFile
@@ -150,6 +154,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.listOperations.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.colFileName, Me.colRenamedTo, Me.colExist})
+        Me.listOperations.ContextMenuStrip = Me.FileListMenu
         Me.listOperations.FullRowSelect = True
         Me.listOperations.HideSelection = False
         Me.listOperations.Location = New System.Drawing.Point(12, 90)
@@ -173,6 +178,18 @@ Partial Class Form1
         '
         Me.colExist.Text = "Exists?"
         '
+        'FileListMenu
+        '
+        Me.FileListMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenExplorerToolStripMenuItem})
+        Me.FileListMenu.Name = "FileListMenu"
+        Me.FileListMenu.Size = New System.Drawing.Size(212, 48)
+        '
+        'OpenExplorerToolStripMenuItem
+        '
+        Me.OpenExplorerToolStripMenuItem.Name = "OpenExplorerToolStripMenuItem"
+        Me.OpenExplorerToolStripMenuItem.Size = New System.Drawing.Size(211, 22)
+        Me.OpenExplorerToolStripMenuItem.Text = "Open Explorer to Location"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -191,6 +208,7 @@ Partial Class Form1
         Me.MinimumSize = New System.Drawing.Size(808, 389)
         Me.Name = "Form1"
         Me.Text = "Delete on Reboot"
+        Me.FileListMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -210,4 +228,6 @@ Partial Class Form1
     Friend WithEvents colFileName As ColumnHeader
     Friend WithEvents colRenamedTo As ColumnHeader
     Friend WithEvents colExist As ColumnHeader
+    Friend WithEvents FileListMenu As ContextMenuStrip
+    Friend WithEvents OpenExplorerToolStripMenuItem As ToolStripMenuItem
 End Class

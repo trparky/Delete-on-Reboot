@@ -215,6 +215,36 @@ Public Class Form1
             End If
         End If
     End Sub
+
+    Private Sub FileListMenu_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles FileListMenu.Opening
+        If listOperations.SelectedItems.Count > 1 Then e.Cancel = True
+    End Sub
+
+    Private Sub OpenExplorerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenExplorerToolStripMenuItem.Click
+        If listOperations.SelectedItems.Count = 1 Then
+            Dim selectedItem As operationsListEntry = CType(listOperations.SelectedItems(0), operationsListEntry)
+
+            Dim path As String = selectedItem.strFileToBeWorkedOn ' Path to check
+
+            Try
+                ' Get the attributes of the file/directory
+                Dim attributes As IO.FileAttributes = IO.File.GetAttributes(path)
+
+                ' Check if the path exists and is a directory or file
+                If (attributes And IO.FileAttributes.Directory) = IO.FileAttributes.Directory Then
+                    SelectFileInWindowsExplorer(path)
+                Else
+                    SelectFileInWindowsExplorer(path)
+                End If
+            Catch ex As IO.FileNotFoundException
+                ' Path does not exist
+                MsgBox($"The file or directory ""{path}"" no longer exists.", MsgBoxStyle.Exclamation, "Error")
+            Catch ex As Exception
+                ' Other error (e.g., permission issue)
+                MsgBox($"An error occurred while accessing ""{path}"". {ex.Message}", MsgBoxStyle.Exclamation, "Error")
+            End Try
+        End If
+    End Sub
 End Class
 
 ' This class extends the ListViewItem so that additional properties can be added

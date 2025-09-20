@@ -209,9 +209,6 @@ Public Class Form1
                         NativeMethods.ILFree(pidlList)
                     End Try
                 End If
-            Else
-                ' Path does not exist
-                MsgBox($"The file or directory ""{strFullPath}"" does not exist.", MsgBoxStyle.Exclamation, "Error")
             End If
         End If
     End Sub

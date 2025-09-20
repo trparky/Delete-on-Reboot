@@ -186,17 +186,15 @@ Public Class Form1
     End Sub
 
     Public Sub SelectFileInWindowsExplorer(strFullPath As String)
-        If Not String.IsNullOrEmpty(strFullPath) Then
-            If IO.File.Exists(strFullPath) Or IO.Directory.Exists(strFullPath) Then
-                Dim pidlList As IntPtr = NativeMethods.ILCreateFromPathW(strFullPath)
+        If Not String.IsNullOrEmpty(strFullPath) AndAlso (IO.File.Exists(strFullPath) Or IO.Directory.Exists(strFullPath)) Then
+            Dim pidlList As IntPtr = NativeMethods.ILCreateFromPathW(strFullPath)
 
-                If Not pidlList.Equals(IntPtr.Zero) Then
-                    Try
-                        NativeMethods.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0)
-                    Finally
-                        NativeMethods.ILFree(pidlList)
-                    End Try
-                End If
+            If Not pidlList.Equals(IntPtr.Zero) Then
+                Try
+                    NativeMethods.SHOpenFolderAndSelectItems(pidlList, 0, IntPtr.Zero, 0)
+                Finally
+                    NativeMethods.ILFree(pidlList)
+                End Try
             End If
         End If
     End Sub

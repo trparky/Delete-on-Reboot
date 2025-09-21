@@ -7,7 +7,7 @@ Public Class Form1
     Private deleteAtReboot As New deleteAtReboot
     ' Boolean to track if the form has finished loading
     Private boolDoneLoading As Boolean = False
-    Private Const strQuote As String = """"
+    Private Const strQuote As String = Chr(34)
 
     ' Event handler for Browse button click
     Private Sub btnBrowse_Click(sender As Object, e As EventArgs) Handles btnBrowse.Click

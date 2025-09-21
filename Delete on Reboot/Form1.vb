@@ -7,6 +7,7 @@ Public Class Form1
     Private deleteAtReboot As New deleteAtReboot
     ' Boolean to track if the form has finished loading
     Private boolDoneLoading As Boolean = False
+    Private Const strQuote As String = """"
 
     ' Event handler for Browse button click
     Private Sub btnBrowse_Click(sender As Object, e As EventArgs) Handles btnBrowse.Click
@@ -34,7 +35,7 @@ Public Class Form1
             End Using
 
             Using registryKey As RegistryKey = Registry.ClassesRoot.OpenSubKey("*\shell\Delete on Reboot\command", True)
-                registryKey.SetValue(vbNullString, """" & Application.ExecutablePath & """ ""%1""", RegistryValueKind.String)
+                registryKey.SetValue(vbNullString, $"{strQuote}{Application.ExecutablePath}{strQuote} {strQuote}%1{strQuote}", RegistryValueKind.String)
             End Using
         Else
             ' Remove "Delete on Reboot" from the context menu in the registry
@@ -51,8 +52,8 @@ Public Class Form1
             If registryKey IsNot Nothing Then
                 Dim matches As Match = Regex.Match(registryKey.GetValue(vbNullString), "(""{0,1}[A-Za-z]:\\.*\.(?:bat|bin|cmd|com|cpl|exe|gadget|inf1|ins|inx|isu|job|jse|lnk|msc|msi|msp|mst|paf|pif|ps1|reg|rgs|sct|shb|shs|u3p|vb|vbe|vbs|vbscript|ws|wsf)""{0,1} )(.*)", RegexOptions.IgnoreCase)
 
-                If matches.Groups(1).Value.Trim.Replace("""", "") <> Application.ExecutablePath Then
-                    registryKey.SetValue(vbNullString, """" & Application.ExecutablePath & """ ""%1""", RegistryValueKind.String)
+                If matches.Groups(1).Value.Trim.Replace(strQuote, "") <> Application.ExecutablePath Then
+                    registryKey.SetValue(vbNullString, $"{strQuote}{Application.ExecutablePath}{strQuote} {strQuote}%1{strQuote}", RegistryValueKind.String)
                 End If
 
                 chkAddToContextMenu.Checked = True
@@ -221,10 +222,10 @@ Public Class Form1
                 End If
             Catch ex As IO.FileNotFoundException
                 ' Path does not exist
-                MsgBox($"The file or directory ""{path}"" no longer exists.", MsgBoxStyle.Exclamation, "Error")
+                MsgBox($"The file or directory {strQuote}{path}{strQuote} no longer exists.", MsgBoxStyle.Exclamation, "Error")
             Catch ex As Exception
                 ' Other error (e.g., permission issue)
-                MsgBox($"An error occurred while accessing ""{path}"". {ex.Message}", MsgBoxStyle.Exclamation, "Error")
+                MsgBox($"An error occurred while accessing {strQuote}{path}{strQuote}. {ex.Message}", MsgBoxStyle.Exclamation, "Error")
             End Try
         End If
     End Sub

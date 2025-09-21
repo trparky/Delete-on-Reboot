@@ -104,28 +104,30 @@ Public Class deleteAtReboot
 
         Try
             ' Declare a variable to hold the registry value for pending operations.
-            Dim pendingOperations As String()
+            Dim pendingOperations As String() = Nothing
 
             ' Open the registry key to read the "PendingFileRenameOperations" value.
             Using registryKey As RegistryKey = Registry.LocalMachine.OpenSubKey("SYSTEM\CurrentControlSet\Control\Session Manager", False)
                 ' Retrieve the value of "PendingFileRenameOperations" from the registry.
-                pendingOperations = registryKey.GetValue("PendingFileRenameOperations")
+                If registryKey IsNot Nothing Then
+                    pendingOperations = TryCast(registryKey.GetValue("PendingFileRenameOperations"), String())
+                End If
             End Using
 
             ' Declare variables to hold file paths for processing.
             Dim strFileToBeWorkedOn, strFileToBeRenamedTo As String
 
             ' Check if there are any pending operations retrieved from the registry.
-            If pendingOperations IsNot Nothing Then
+            If pendingOperations IsNot Nothing AndAlso pendingOperations.Length Mod 2 = 0 Then
                 ' Loop through the pending operations in pairs (source and target).
-                For i = 0 To pendingOperations.Count - 1 Step 2
+                For i = 0 To pendingOperations.Length - 1 Step 2
                     ' Remove any special patterns and prefixes from the source file path.
                     strFileToBeWorkedOn = RemoveNumber(pendingOperations(i).Replace("\??\", ""))
                     ' Remove any special patterns and prefixes from the target file path.
                     strFileToBeRenamedTo = RemoveNumber(pendingOperations(i + 1).Replace("\??\", ""))
 
                     ' Check if the target file path is empty or consists only of whitespace.
-                    If String.IsNullOrEmpty(pendingOperations(i + 1).Trim) Then
+                    If String.IsNullOrWhiteSpace(pendingOperations(i + 1)) Then
                         ' Add a delete operation to the list of pending operations.
                         _pendingOperations.Add(New deleteAtRebootStructure(strFileToBeWorkedOn))
                     Else

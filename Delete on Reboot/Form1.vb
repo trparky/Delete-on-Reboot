@@ -149,7 +149,7 @@ Public Class Form1
 
     ' Prompt the user to reboot the system
     Private Sub askForReboot()
-        Dim rebootRequestResponse As MsgBoxResult = MsgBox("The file has been scheduled to be deleted at reboot." & vbCrLf & vbCrLf & "Do you want to reboot your computer now?", MsgBoxStyle.Question + MsgBoxStyle.YesNo, "Reboot now?")
+        Dim rebootRequestResponse As MsgBoxResult = MsgBox($"The file has been scheduled to be deleted at reboot.{vbCrLf}{vbCrLf}Do you want to reboot your computer now?", MsgBoxStyle.Question + MsgBoxStyle.YesNo, "Reboot now?")
 
         If rebootRequestResponse = MsgBoxResult.Yes Then
             ' Save operations and initiate system reboot

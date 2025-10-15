@@ -40,6 +40,7 @@ Partial Class Form1
         Me.colExist = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.FileListMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.OpenExplorerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CopyFilePathToClipboardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FileListMenu.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -180,15 +181,21 @@ Partial Class Form1
         '
         'FileListMenu
         '
-        Me.FileListMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenExplorerToolStripMenuItem})
+        Me.FileListMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CopyFilePathToClipboardToolStripMenuItem, Me.OpenExplorerToolStripMenuItem})
         Me.FileListMenu.Name = "FileListMenu"
-        Me.FileListMenu.Size = New System.Drawing.Size(212, 48)
+        Me.FileListMenu.Size = New System.Drawing.Size(220, 70)
         '
         'OpenExplorerToolStripMenuItem
         '
         Me.OpenExplorerToolStripMenuItem.Name = "OpenExplorerToolStripMenuItem"
-        Me.OpenExplorerToolStripMenuItem.Size = New System.Drawing.Size(211, 22)
+        Me.OpenExplorerToolStripMenuItem.Size = New System.Drawing.Size(219, 22)
         Me.OpenExplorerToolStripMenuItem.Text = "Open Explorer to Location"
+        '
+        'CopyFilePathToClipboardToolStripMenuItem
+        '
+        Me.CopyFilePathToClipboardToolStripMenuItem.Name = "CopyFilePathToClipboardToolStripMenuItem"
+        Me.CopyFilePathToClipboardToolStripMenuItem.Size = New System.Drawing.Size(219, 22)
+        Me.CopyFilePathToClipboardToolStripMenuItem.Text = "Copy File Path to Clipboard"
         '
         'Form1
         '
@@ -230,4 +237,5 @@ Partial Class Form1
     Friend WithEvents colExist As ColumnHeader
     Friend WithEvents FileListMenu As ContextMenuStrip
     Friend WithEvents OpenExplorerToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CopyFilePathToClipboardToolStripMenuItem As ToolStripMenuItem
 End Class

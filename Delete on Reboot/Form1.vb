@@ -229,6 +229,24 @@ Public Class Form1
             End Try
         End If
     End Sub
+
+    Private Sub CopyFilePathToClipboardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopyFilePathToClipboardToolStripMenuItem.Click
+        If listOperations.SelectedItems.Count = 1 Then
+            Dim selectedItem As operationsListEntry = CType(listOperations.SelectedItems(0), operationsListEntry)
+            Debug.WriteLine(selectedItem.strFileToBeWorkedOn)
+            If CopyTextToWindowsClipboard(selectedItem.strFileToBeWorkedOn, Text) Then MsgBox("File path copied to clipboard.", MsgBoxStyle.Information, Text)
+        End If
+    End Sub
+
+    Private Function CopyTextToWindowsClipboard(strTextToBeCopiedToClipboard As String, strErrorMessageTitle As String) As Boolean
+        Try
+            Clipboard.SetDataObject(strTextToBeCopiedToClipboard, True, 5, 200)
+            Return True
+        Catch ex As Exception
+            MsgBox("Unable to open Windows Clipboard to copy text to it.", MsgBoxStyle.Critical, strErrorMessageTitle)
+            Return False
+        End Try
+    End Function
 End Class
 
 ' This class extends the ListViewItem so that additional properties can be added
